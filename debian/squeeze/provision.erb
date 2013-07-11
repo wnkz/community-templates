@@ -6,10 +6,8 @@ d-i console-setup/variant USA
 d-i console-setup/layout USA
 d-i console-setup/layoutcode string us
 
-<% if @host.operatingsystem.name == "Debian" -%>
-<% if @host.operatingsystem.major.to_i >= 7 -%>
+<% if @host.operatingsystem.name == "Debian" && @host.operatingsystem.major.to_i >= 7 -%>
 d-i keymap select us
-<% end -%>
 <% end -%>
 
 # Network configuration

@@ -1,7 +1,5 @@
 <% if @host.params['install-disk'] -%>
 d-i partman-auto/disk string <%= @host.params['install-disk'] %>
-<% else -%>
-d-i partman-auto/disk string /dev/sda /dev/vda
 <% end -%>
 
 ### Partitioning

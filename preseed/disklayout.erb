@@ -6,10 +6,14 @@
 #- Ubuntu 10.04
 #- Ubuntu 12.04
 #- Ubuntu 13.04
+
+# Alternatively, you may specify a disk to partition. If the system has only
+# one disk the installer will default to using that, but otherwise the device
+# name must be given in traditional, non-devfs format (so e.g. /dev/hda or
+# /dev/sda, and not e.g. /dev/discs/disc0/disc).
+# For example, to use the first SCSI/SATA hard disk:
 <% if @host.params['install-disk'] -%>
 d-i partman-auto/disk string <%= @host.params['install-disk'] %>
-<% else -%>
-d-i partman-auto/disk string /dev/sda /dev/vda
 <% end -%>
 
 ### Partitioning

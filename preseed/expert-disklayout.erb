@@ -1,0 +1,94 @@
+#kind: ptable
+#name: Expert LVM Community Preseed Disklayout
+#oses:
+#- Debian 6.0
+#- Debian 7.0
+#- Ubuntu 10.04
+#- Ubuntu 12.04
+#- Ubuntu 13.04
+<% if @host.params['install-disk'] -%>
+d-i partman-auto/disk string <%= @host.params['install-disk'] %>
+<% end -%>
+
+### Partitioning
+d-i partman-auto/method string lvm
+
+# If one of the disks that are going to be automatically partitioned
+# contains an old LVM configuration, the user will normally receive a
+# warning. This can be preseeded away...
+d-i partman-lvm/device_remove_lvm boolean true
+# The same applies to pre-existing software RAID array:
+d-i partman-md/device_remove_md boolean true
+# And the same goes for the confirmation to write the lvm partitions.
+d-i partman-lvm/confirm boolean true
+d-i partman-lvm/confirm_nooverwrite boolean true
+
+# For LVM partitioning, you can select how much of the volume group to use
+# for logical volumes.
+d-i partman-auto-lvm/guided_size string max
+
+# LVM VG name
+d-i partman-auto-lvm/new_vg_name string vg-00
+
+# If you just want to change the default filesystem from ext3 to something
+# else, you can do that without providing a full recipe.
+<% if @host.params['partitioning-filesystem'] -%>
+d-i partman/default_filesystem string <%= @host.params['partitioning-filesystem'] %>
+<% end %>
+
+# Expert recipe
+d-i partman-auto/expert_recipe string                        \
+  bso ::                                                     \
+    1024 5000 1536 $default_filesystem                       \
+      $defaultignore{ }                                      \
+      $primary{ } $bootable{ }                               \
+      method{ format } format{ }                             \
+      use_filesystem{ } $default_filesystem{ }               \
+      mountpoint{ /boot }                                    \
+    .                                                        \
+    2048 5000 2560 $default_filesystem                       \
+      $defaultignore{ }                                      \
+      lvmok{ } lvm_name { root }                             \
+      method{ format } format{ }                             \
+      use_filesystem{ } $default_filesystem{ }               \
+      mountpoint{ / }                                        \
+    .                                                        \
+    1024 3000 -1 $default_filesystem                         \
+      $defaultignore{ }                                      \
+      lvmok{ } lvm_name { home }                             \
+      method{ format } format{ }                             \
+      use_filesystem{ } $default_filesystem{ }               \
+      mountpoint{ /home }                                    \
+    .                                                        \
+    8192 5000 8704 $default_filesystem                       \
+      $defaultignore{ }                                      \
+      lvmok{ } lvm_name { var }                              \
+      method{ format } format{ }                             \
+      use_filesystem{ } $default_filesystem{ }               \
+      mountpoint{ /var }                                     \
+    .                                                        \
+    8192 5000 8704 $default_filesystem                       \
+      $defaultignore{ }                                      \
+      lvmok{ } lvm_name { usr }                              \
+      method{ format } format{ }                             \
+      use_filesystem{ } $default_filesystem{ }               \
+      mountpoint{ /usr }                                     \
+    .                                                        \
+    1024 5000 1536 $default_filesystem                       \
+      $defaultignore{ }                                      \
+      lvmok{ } lvm_name { tmp }                              \
+      method{ format } format{ }                             \
+      use_filesystem{ } $default_filesystem{ }               \
+      mountpoint{ /tmp }                                     \
+    .                                                        \
+    256 5000 200% linux-swap                                 \
+      lvmok{ } lvm_name{ swap }                              \
+      method{ swap } format{ }                               \
+    .
+
+# This makes partman automatically partition without confirmation, provided
+# that you told it what to do using one of the methods above.
+d-i partman/confirm_write_new_label boolean true
+d-i partman/choose_partition select finish
+d-i partman/confirm boolean true
+d-i partman/confirm_nooverwrite boolean true

@@ -1,7 +1,10 @@
-#kind: ptable
-#name: Expert LVM Community Preseed Disklayout
-#oses:
-#- Debian 5.0
+<%#
+kind: ptable
+name: BSO Lenny Preseed Disklayout
+oses:
+- Debian 5.0
+%>
+
 <% if @host.params['install-disk'] -%>
 d-i partman-auto/disk string <%= @host.params['install-disk'] %>
 <% end -%>

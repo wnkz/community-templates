@@ -26,7 +26,7 @@ keyboard us
 skipx
 network --bootproto <%= @static ? "static --ip=#{@host.ip} --netmask=#{@host.subnet.mask} --gateway=#{@host.subnet.gateway} --nameserver=#{[@host.subnet.dns_primary,@host.subnet.dns_secondary].reject{|n| n.blank?}.join(',')}" : 'dhcp' %> --hostname <%= @host %>
 rootpw --iscrypted <%= root_pass %>
-user --name=noc --gecos="Network Operations Center" --iscrypted <%= root_pass %>
+user --name=noc --gecos="Network Operations Center" --iscrypted --password=<%= root_pass %>
 firewall --<%= os_major >= 6 ? 'service=' : '' %>ssh
 authconfig --useshadow --passalgo=sha256 --kickstart
 timezone <%= @host.params['time-zone'] || 'UTC' %>

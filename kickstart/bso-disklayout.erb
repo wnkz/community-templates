@@ -11,11 +11,10 @@ oses:
 - RedHat 5
 - RedHat 6
 %>
-
-bootloader --location=mbr
 zerombr
 clearpart --all --initlabel
 
+# Minimum space required > 20Go
 part /boot --fstype ext2 --size=2048
 part swap --recommended
 part pv.01 --size=1000 --grow

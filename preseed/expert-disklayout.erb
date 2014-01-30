@@ -43,6 +43,7 @@ d-i partman/default_filesystem string <%= @host.params['partitioning-filesystem'
 <% end %>
 
 # Expert recipe
+# Minimum space required > 20Go
 d-i partman-auto/expert_recipe string \
   bso :: \
     1 1 1 free \

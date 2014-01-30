@@ -1,0 +1,27 @@
+<%#
+kind: ptable
+name: BSO LVM Kickstart Disklayout
+oses:
+- CentOS 5
+- CentOS 6
+- Fedora 16
+- Fedora 17
+- Fedora 18
+- Fedora 19
+- RedHat 5
+- RedHat 6
+%>
+
+bootloader --location=mbr
+zerombr
+clearpart --all --initlabel
+
+part /boot --fstype ext2 --size=2048
+part swap --recommended
+part pv.01 --size=1000 --grow
+volgroup vg_00 pv.01
+logvol / --fstype ext4 --name=lv_root --vgname=vg_00 --size=2048
+logvol /tmp --fstype ext4 --name=lv_tmp --vgname=vg_00 --size=1024
+logvol /usr --fstype ext4 --name=lv_usr --vgname=vg_00 --size=8192
+logvol /var --fstype ext4 --name=lv_var --vgname=vg_00 --size=8192
+logvol /home --fstype ext4 --name=lv_home --vgname=vg_00 --grow

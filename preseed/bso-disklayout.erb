@@ -1,3 +1,4 @@
+<%#
 #kind: ptable
 #name: BSO Expert Preseed Disklayout
 #oses:
@@ -6,6 +7,7 @@
 #- Ubuntu 10.04
 #- Ubuntu 12.04
 #- Ubuntu 13.04
+%>
 <% if @host.params['install-disk'] -%>
 d-i partman-auto/disk string <%= @host.params['install-disk'] %>
 <% end -%>

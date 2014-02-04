@@ -82,6 +82,11 @@ d-i passwd/user-fullname string Network Operations Center
 d-i passwd/username string noc
 d-i passwd/user-password-crypted password <%= root_pass %>
 
+<% if @host.operatingsystem.name == 'Ubuntu' and @host.operatingsystem.major.to_i == 10 -%>
+# Set to true if you want to encrypt the first user's home directory.
+d-i user-setup/encrypt-home boolean false
+<% end -%>
+
 <% if puppet_enabled && @host.params['enable-puppetlabs-repo'] && @host.params['enable-puppetlabs-repo'] == 'true' -%>
 # Puppetlabs products
 d-i apt-setup/local0/repository string \

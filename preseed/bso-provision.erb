@@ -82,7 +82,7 @@ d-i passwd/user-fullname string Network Operations Center
 d-i passwd/username string noc
 d-i passwd/user-password-crypted password <%= root_pass %>
 
-<% if @host.operatingsystem.name == 'Ubuntu' and @host.operatingsystem.major.to_i == 10 -%>
+<% if @host.operatingsystem.name == 'Ubuntu' and @host.operatingsystem.major.to_i >= 10 -%>
 # Set to true if you want to encrypt the first user's home directory.
 d-i user-setup/encrypt-home boolean false
 <% end -%>

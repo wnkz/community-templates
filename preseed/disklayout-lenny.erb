@@ -30,52 +30,52 @@ d-i partman-auto-lvm/guided_size string max
 d-i partman-auto-lvm/new_vg_name string vg_00
 
 # Expert recipe
-d-i partman-auto/expert_recipe string                        \
-  bso ::                                                     \
-    1073 5000 1073 $default_filesystem                       \
-      $primary{ } $bootable{ }                               \
-      method{ format } format{ }                             \
-      use_filesystem{ } filesystem{ xfs }                    \
-      mountpoint{ /boot }                                    \
-    .                                                        \
-    2147 5000 2147 $default_filesystem                       \
-      $defaultignore{ }                                      \
-      lvmok{ } lvm_name { root }                             \
-      method{ format } format{ }                             \
-      use_filesystem{ } filesystem{ xfs }                    \
-      mountpoint{ / }                                        \
-    .                                                        \
-    8589 5000 8589 $default_filesystem                       \
-      $defaultignore{ }                                      \
-      lvmok{ } lvm_name { var }                              \
-      method{ format } format{ }                             \
-      use_filesystem{ } filesystem{ xfs }                    \
-      mountpoint{ /var }                                     \
-    .                                                        \
-    8589 5000 8589 $default_filesystem                       \
-      $defaultignore{ }                                      \
-      lvmok{ } lvm_name { usr }                              \
-      method{ format } format{ }                             \
-      use_filesystem{ } filesystem{ xfs }                    \
-      mountpoint{ /usr }                                     \
-    .                                                        \
-    1073 5000 1073 $default_filesystem                       \
-      $defaultignore{ }                                      \
-      lvmok{ } lvm_name { tmp }                              \
-      method{ format } format{ }                             \
-      use_filesystem{ } filesystem{ xfs }                    \
-      mountpoint{ /tmp }                                     \
-    .                                                        \
-    1073 10000 -1 $default_filesystem                        \
-      $defaultignore{ }                                      \
-      lvmok{ } lvm_name { home }                             \
-      method{ format } format{ }                             \
-      use_filesystem{ } filesystem{ xfs }                    \
-      mountpoint{ /home }                                    \
-    .                                                        \
-    268 5000 100% linux-swap                                 \
-      lvmok{ } lvm_name{ swap }                              \
-      method{ swap } format{ }                               \
+d-i partman-auto/expert_recipe string \
+  bso :: \
+    1073 5000 1073 $default_filesystem \
+      $primary{ } $bootable{ } \
+      method{ format } format{ } \
+      use_filesystem{ } filesystem{ xfs } \
+      mountpoint{ /boot } \
+    . \
+    2147 5000 2147 $default_filesystem \
+      $defaultignore{ } \
+      lvmok{ } lvm_name { root } \
+      method{ format } format{ } \
+      use_filesystem{ } filesystem{ xfs } \
+      mountpoint{ / } \
+    . \
+    8589 5000 8589 $default_filesystem \
+      $defaultignore{ } \
+      lvmok{ } lvm_name { var } \
+      method{ format } format{ } \
+      use_filesystem{ } filesystem{ xfs } \
+      mountpoint{ /var } \
+    . \
+    8589 5000 8589 $default_filesystem \
+      $defaultignore{ } \
+      lvmok{ } lvm_name { usr } \
+      method{ format } format{ } \
+      use_filesystem{ } filesystem{ xfs } \
+      mountpoint{ /usr } \
+    . \
+    1073 5000 1073 $default_filesystem \
+      $defaultignore{ } \
+      lvmok{ } lvm_name { tmp } \
+      method{ format } format{ } \
+      use_filesystem{ } filesystem{ xfs } \
+      mountpoint{ /tmp } \
+    . \
+    1073 10000 -1 $default_filesystem \
+      $defaultignore{ } \
+      lvmok{ } lvm_name { home } \
+      method{ format } format{ } \
+      use_filesystem{ } filesystem{ xfs } \
+      mountpoint{ /home } \
+    . \
+    268 5000 100% linux-swap \
+      lvmok{ } lvm_name{ swap } \
+      method{ swap } format{ } \
     .
 
 # This makes partman automatically partition without confirmation, provided

@@ -45,6 +45,7 @@ d-i partman-auto-lvm/new_vg_name string vg_00
 d-i partman/default_filesystem string <%= @host.params['partitioning-filesystem'] %>
 <% end %>
 
+<% if @host.params['partitioning-recipe'] && @host.params['partitioning-recipe'] == 'expert' -%>
 # Expert recipe
 # Minimum space required > 20Go
 d-i partman-auto/expert_recipe string \
@@ -113,6 +114,11 @@ d-i partman-auto/expert_recipe string \
       $default_filesystem{ } \
       mountpoint{ /home } \
     .
+<% elsif @host.params['partitioning-recipe'] -%>
+d-i partman-auto/choose_recipe select <%= @host.params['partitioning-recipe'] %>
+<% else -%>
+d-i partman-auto/choose_recipe select atomic
+<% end %>
 
 # This makes partman automatically partition without confirmation, provided
 # that you told it what to do using one of the methods above.

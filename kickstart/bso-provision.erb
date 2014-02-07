@@ -66,11 +66,13 @@ text
 reboot
 
 %packages --ignoremissing
+zsh
 yum
 dhclient
 ntp
 wget
 @Core
+@development
 epel-release
 <% if puppet_enabled %>
 puppet

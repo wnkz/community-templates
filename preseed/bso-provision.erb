@@ -117,7 +117,7 @@ d-i apt-setup/backports boolean true
 
 # Install some base packages
 d-i pkgsel/include string \
-  <%= puppet_package %> lsb-release openssh-server build-essential \
+  <%= puppet_package %> lsb-release openssh-server zsh build-essential \
   less vim \
   htop ncdu mtr tcpdump screen curl wget lsof lshw ethtool fping strace ifstat psmisc
 d-i pkgsel/update-policy select unattended-upgrades
